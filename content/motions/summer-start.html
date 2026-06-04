@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>АктиБио — Лето началось</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    background: #3AAA35;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Фоновый градиент KV */
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, #4cc645 0%, #3AAA35 45%, #1e6b1a 100%);
+  }
+
+  /* Солнечные лучи */
+  .rays {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(
+      from 0deg at 50% -10%,
+      rgba(255,255,255,0.04) 0deg 10deg,
+      transparent 10deg 20deg
+    );
+    opacity: 0;
+  }
+
+  /* Верхняя плашка */
+  .top-badge {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 60px;
+    padding: 18px 48px;
+    opacity: 0;
+  }
+
+  .top-badge span {
+    font-family: 'Arial', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  /* Главный текстовый блок */
+  .main-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    padding: 0 60px;
+  }
+
+  .line {
+    display: block;
+    overflow: hidden;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .line-inner {
+    display: block;
+    transform: translateY(120%);
+    will-change: transform;
+  }
+
+  .word-лето {
+    font-size: 200px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -4px;
+    text-transform: uppercase;
+    text-shadow: 0 8px 40px rgba(0,0,0,0.2);
+  }
+
+  .word-началось {
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .word-sub {
+    font-family: 'Arial', sans-serif;
+    font-size: 52px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 1px;
+    text-transform: none;
+    margin-top: 8px;
+  }
+
+  /* Разделитель */
+  .divider {
+    width: 0;
+    height: 4px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 2px;
+    margin: 40px auto;
+    will-change: width;
+  }
+
+  /* Нижний блок с продуктом */
+  .product-block {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 80px;
+    opacity: 0;
+  }
+
+  /* Бутылка — CSS-симуляция */
+  .bottle {
+    width: 160px;
+    height: 340px;
+    background: linear-gradient(160deg, #fff 0%, #e8f5e6 50%, #c5e08c 100%);
+    border-radius: 30px 30px 40px 40px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2), inset 0 2px 8px rgba(255,255,255,0.8);
+    transform: translateY(60px);
+    will-change: transform;
+    margin-bottom: 40px;
+  }
+
+  .bottle::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 50px;
+    background: linear-gradient(160deg, #fff, #e0f0dc);
+    border-radius: 12px 12px 0 0;
+    box-shadow: inset 0 2px 6px rgba(255,255,255,0.6);
+  }
+
+  .bottle-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .bottle-logo .b-name {
+    font-size: 22px;
+    font-weight: 900;
+    color: #3AAA35;
+    letter-spacing: 1px;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  .bottle-logo .b-tagline {
+    font-family: 'Arial', sans-serif;
+    font-size: 10px;
+    color: #2d8a29;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* Логотип снизу */
+  .brand-logo {
+    text-align: center;
+  }
+
+  .brand-logo .logo-name {
+    font-size: 72px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    display: block;
+  }
+
+  .brand-logo .logo-tagline {
+    font-family: 'Arial', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* Эмодзи-конфетти */
+  .confetti-item {
+    position: absolute;
+    font-size: 60px;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .c1 { top: 15%; left: 8%; }
+  .c2 { top: 22%; right: 10%; }
+  .c3 { top: 38%; left: 5%; }
+  .c4 { top: 35%; right: 7%; }
+  .c5 { top: 60%; left: 6%; }
+  .c6 { top: 65%; right: 8%; }
+
+  /* Пульс-кружок */
+  .pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.15);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+<div class="rays" id="rays"></div>
+<div class="pulse" id="pulse"></div>
+
+<!-- Конфетти -->
+<div class="confetti-item c1" id="c1">☀️</div>
+<div class="confetti-item c2" id="c2">🍒</div>
+<div class="confetti-item c3" id="c3">🌿</div>
+<div class="confetti-item c4" id="c4">🎾</div>
+<div class="confetti-item c5" id="c5">🚲</div>
+<div class="confetti-item c6" id="c6">🍉</div>
+
+<!-- Верхняя плашка -->
+<div class="top-badge" id="topBadge">
+  <span>Июнь · 2026</span>
+</div>
+
+<!-- Главный текст -->
+<div class="main-text" id="mainText">
+  <span class="line">
+    <span class="line-inner word-лето" id="word1">ЛЕТО</span>
+  </span>
+  <div class="divider" id="divider"></div>
+  <span class="line">
+    <span class="line-inner word-началось" id="word2">НАЧАЛОСЬ</span>
+  </span>
+  <span class="line" style="margin-top:24px">
+    <span class="line-inner word-sub" id="word3">и твой кишечник уже готов 💚</span>
+  </span>
+</div>
+
+<!-- Нижний блок -->
+<div class="product-block" id="productBlock">
+  <div class="bottle" id="bottle">
+    <div class="bottle-logo">
+      <span class="b-name">Акти<br>Био</span>
+      <span class="b-tagline">для лёгкости изнутри</span>
+    </div>
+  </div>
+  <div class="brand-logo">
+    <span class="logo-name">АКТИБИО</span>
+    <span class="logo-tagline">для лёгкости изнутри</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+// 0.0s — фон оживает, лучи появляются
+tl.to('#rays', { opacity: 1, duration: 1.2, ease: 'power1.inOut' }, 0)
+
+// 0.3s — пульс
+.fromTo('#pulse',
+  { opacity: 0.3, scale: 0.5 },
+  { opacity: 0, scale: 2.5, duration: 1.8, ease: 'power1.out', repeat: -1, repeatDelay: 1 },
+  0.3
+)
+
+// 0.5s — плашка сверху
+.to('#topBadge', { opacity: 1, y: 0, duration: 0.6 }, 0.5)
+
+// 0.8s — "ЛЕТО" врывается снизу
+.to('#word1', { translateY: '0%', duration: 0.7, ease: 'expo.out' }, 0.8)
+
+// 1.2s — разделитель
+.to('#divider', { width: 240, duration: 0.5 }, 1.2)
+
+// 1.5s — "НАЧАЛОСЬ"
+.to('#word2', { translateY: '0%', duration: 0.6, ease: 'expo.out' }, 1.5)
+
+// 2.0s — подпись
+.to('#word3', { translateY: '0%', duration: 0.5, ease: 'power2.out' }, 2.0)
+
+// 2.2s — конфетти разлетается
+.to(['#c1','#c2','#c3','#c4','#c5','#c6'], {
+  opacity: 1,
+  duration: 0.4,
+  stagger: 0.08
+}, 2.2)
+
+.to('#c1', { rotation: -15, y: -20, duration: 2, ease: 'sine.inOut', repeat: -1, yoyo: true }, 2.2)
+.to('#c2', { rotation: 12, y: -30, duration: 2.3, ease: 'sine.inOut', repeat: -1, yoyo: true }, 2.3)
+.to('#c3', { rotation: -10, y: 15, duration: 1.8, ease: 'sine.inOut', repeat: -1, yoyo: true }, 2.4)
+.to('#c4', { rotation: 18, y: -25, duration: 2.1, ease: 'sine.inOut', repeat: -1, yoyo: true }, 2.2)
+.to('#c5', { rotation: -8, y: 20, duration: 2.4, ease: 'sine.inOut', repeat: -1, yoyo: true }, 2.5)
+.to('#c6', { rotation: 14, y: -18, duration: 1.9, ease: 'sine.inOut', repeat: -1, yoyo: true }, 2.3)
+
+// 2.5s — продуктовый блок
+.to('#productBlock', { opacity: 1, duration: 0.5 }, 2.5)
+.to('#bottle', { translateY: '0px', duration: 0.8, ease: 'back.out(1.5)' }, 2.6)
+
+// Бутылка слегка покачивается
+.to('#bottle', {
+  rotation: 3,
+  duration: 2,
+  ease: 'sine.inOut',
+  repeat: -1,
+  yoyo: true,
+  delay: 0.5
+}, 3.5);
+</script>
+
+</body>
+</html>
